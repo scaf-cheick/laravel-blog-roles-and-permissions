@@ -1,0 +1,4 @@
+https://spatie.be/docs/laravel-permission/v5/installation-laravel => Laravel spatie Permission ^5.0
+
+composer install
+php artisan migrate:fresh --seed --seeder=GenericDataSeeder 
