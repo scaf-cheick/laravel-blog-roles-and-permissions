@@ -14,6 +14,20 @@ use App\User;
 
 class PostController extends Controller
 {
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+        //$this->middleware('role:post_manager|super_admin');
+        $this->middleware('permission:edit_articles', ['only' => ['create','store','update','index'] ]);
+        $this->middleware('permission:delete_articles', ['only' => ['delete'] ]);
+        $this->middleware('permission:publish_articles', ['only' => ['publish'] ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +35,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(5);
+        if(Auth::user()->roles->contains(['super_admin'])){
+            $posts = Post::orderBy('id', 'desc')->paginate(5);
+        }else{
+            $posts = Post::where('initiator_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(5);
+        }
+        
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -139,7 +158,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->validator_id = Auth::user()->id;
-        $post->status = true;
+        $post->status ? $post->status = false : $post->status = true;
         $post->save();
         return redirect()->route('post.index')->with('success', 'post published successfully');
     }

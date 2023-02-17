@@ -10,8 +10,11 @@
 
         <blockquote>Posts</blockquote>
 
-        <a class= "waves-effect waves-dark green btn btn-medium right" href="{{route('post.create')}}">ADD<i class="material-icons white-text right">add</i></a>
-        <br>
+        @can('edit_articles')
+            <a class= "waves-effect waves-dark green btn btn-medium right" href="{{route('post.create')}}">ADD<i class="material-icons white-text right">add</i></a>
+            <br>
+        @endcan
+        
 
         <table class="striped">
             <thead>
@@ -42,16 +45,29 @@
 
                             @include('layouts.partials.modals._post')
 
-                            <a class= "btn waves-effect btn-small green" href="{{route('post.edit', $post->id)}}">
-                                <i class="material-icons white-text">edit</i>
-                            </a>
+                            @can('publish_articles')
+                                <a class= "btn waves-effect btn-small green" href="{{route('post.publish', $post->id)}}">
+                                    <i class="material-icons white-text">@if($post->status) network_wifi @else signal_wifi_off @endif</i>
+                                </a>
+                            @endcan
 
-                            <form id="delete-form-{{$post->id}}" action="{{route('post.destroy',$post->id)}}" method="POST"  style="display: inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <a class= "btn waves-effect btn-small red" onclick="if(confirm('Do you really want to delete this post?')) {event.preventDefault();
-                                                 document.getElementById('delete-form-{{$post->id}}').submit();}"><i class="material-icons white-text">delete</i></a>
-                          </form>
+                            @can('edit_articles')
+
+                                <a class= "btn waves-effect btn-small green" href="{{route('post.edit', $post->id)}}">
+                                    <i class="material-icons white-text">edit</i>
+                                </a>
+
+                            @endcan
+
+                            @can('delete_articles')
+
+                                <form id="delete-form-{{$post->id}}" action="{{route('post.destroy',$post->id)}}" method="POST"  style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a class= "btn waves-effect btn-small red" onclick="if(confirm('Do you really want to delete this post?')) {event.preventDefault();
+                                                     document.getElementById('delete-form-{{$post->id}}').submit();}"><i class="material-icons white-text">delete</i></a>
+                                </form>
+                            @endcan
              
                         </td>
                     </tr>

@@ -8,6 +8,19 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+        $this->middleware('role:category_manager|super_admin');
+        //$this->middleware('permission:edit_categories', ['only' => ['create','store','update','delete'] ]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

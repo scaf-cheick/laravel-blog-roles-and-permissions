@@ -9,7 +9,6 @@
         @include('layouts.partials._successOrerror')
 
         <blockquote>Roles</blockquote>
-
         <a class= "waves-effect waves-dark green btn btn-medium right" href="{{route('role.create')}}">ADD<i class="material-icons white-text right">add</i></a>
         <br>
 
@@ -32,7 +31,7 @@
                             @if($role->name == 'super_admin')
                                 all granted
                             @else
-                                @forelse($role->permissions as $permission) {{$permission->name.' - '}}  @empty aucune permission @endforelse
+                                @forelse($role->permissions as $permission) {{$permission->name.' - '}}  @empty no permission @endforelse
                             @endif
                         </td>
                         <td>

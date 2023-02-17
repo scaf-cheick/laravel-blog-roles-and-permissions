@@ -8,6 +8,17 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+        $this->middleware('role:access_manager|super_admin');
+    }
+
     /**
      * Display a listing of the resource.
      *

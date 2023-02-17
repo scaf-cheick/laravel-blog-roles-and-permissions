@@ -85,6 +85,10 @@
                 </div>
                 <div class="links">
                     <h3>Management of roles, permissions, and a blog</h3>
+                    <p>A blog management Laravel project with roles and permissions</p>
+                    <p>Sample role like post_manager, category_manager, user_manager, super_admin, etc.</p>
+                    <p>Each role have specific permission and one or more roles can be assign to a user.</p>
+                    <p>Enjoy and contribute to improve this project...</p>
                 </div>
 
                 {{-- <div class="links">

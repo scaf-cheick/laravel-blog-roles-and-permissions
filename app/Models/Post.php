@@ -29,6 +29,6 @@ class Post extends Model
 
     public function validator(){
 
-        return $this->belongsTo('App\User', 'validator');
+        return $this->belongsTo('App\User', 'validator_id');
     }
 }
